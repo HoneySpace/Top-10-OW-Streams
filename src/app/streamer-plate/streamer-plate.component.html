@@ -1,0 +1,56 @@
+<ng-template #nameHolder>
+	<p class="m5 left name">
+		Имя: загрузка...
+	</p>
+</ng-template>
+<ng-template #infoHolder>
+	<p class="m5 left info">
+		загрузка...
+	</p>
+</ng-template>
+
+<ng-template #heroHolder>
+	<p class="m5 left info">
+		Герой не указан
+	</p>
+</ng-template>
+
+<ng-template #titleHolder>
+	<p class="centre title">
+		Название стрима: загрузка...
+	</p>
+</ng-template>
+
+<ng-template #imgHolder>
+	<img src="https://cs-rulit.ru/files/avatars/1548584003.jpg">
+	<!-- "https://cs-rulit.ru/files/avatars/1548584003.jpg" -->
+</ng-template>
+
+<div class="main">
+	<p *ngIf="title | async; else titleHolder" class="centre title">
+		{{title | async}}
+	</p>
+
+	<img *ngIf="iconURL | async; else imgHolder" [src]="iconURL| async">
+
+	<div class="Centre flex-container"> 
+    <p class="m5 left name" *ngIf="userName | async; else nameHolder">
+		  	{{userName | async}}
+		  </p>
+    <button class="btn right m5" (click)="GoToStream()">
+        Cмотреть
+      </button>
+	</div>
+  <div class="Centre flex-container" style="flex-direction:column"> 
+      <p class="m5 left info" *ngIf="viewerCount | async; else infoHolderHolder">
+		  	Зрителей:{{viewerCount | async}}
+		  </p>
+      <p class="m5 left info" *ngIf="language | async; else infoHolderHolder">
+		  	Язык:{{language | async}}
+		  </p>      		  		  
+      <p class="m5 left info" *ngIf="heroName | async; else heroHolder">
+        Герой: {{heroName | async}} Роль: {{heroRole | async}}
+		  </p>      
+       
+  </div>
+</div>
