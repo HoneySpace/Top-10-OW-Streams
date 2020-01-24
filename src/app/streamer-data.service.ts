@@ -17,12 +17,13 @@ export class StreamerDataService {
     {      
       this.Streamers.push(new Streamer(i));      
     }
-    this.InitObj();     
+    this.InitObj();    
   }  
 
   public LogIt() {    
     console.log(this);
-  }
+  }    
+
 
   public async InitObj() {
     await this.SetOWData();
