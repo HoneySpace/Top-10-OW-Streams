@@ -8,17 +8,18 @@ export const count = 10;
 
 export class StreamerDataService {
   public Streamers=[];
-  
-  
+ 
 
   constructor() {
-    console.log('Сервис создан'); 
+    
+    console.log('Сервис создан');     
     for(let i=0;i<count;i++)
     {      
       this.Streamers.push(new Streamer(i));      
     }
     this.InitObj(); 
-    setInterval(this.InitObj,7500);   
+    let S = this.InitObj.bind(this);
+    setInterval(S,10000);   
   }  
 
   public LogIt() {    
