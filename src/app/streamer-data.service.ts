@@ -17,7 +17,8 @@ export class StreamerDataService {
     {      
       this.Streamers.push(new Streamer(i));      
     }
-    this.InitObj();    
+    this.InitObj(); 
+    setInterval(this.InitObj,7500);   
   }  
 
   public LogIt() {    
@@ -26,12 +27,22 @@ export class StreamerDataService {
 
 
   public async InitObj() {
-    await this.SetOWData();
-    for(let streamer of this.Streamers)
-    {
-    this.SetUserData(streamer);
-    this.SetStreamData(streamer); 
-    }  
+    let p = new Promise((resolve)=>{
+        this.SetOWData(resolve);
+    })
+    p.then(()=>{
+      for(let streamer of this.Streamers)
+      {
+      this.SetUserData(streamer);
+      this.SetStreamData(streamer);
+      } 
+    });
+    // await this.SetOWData();
+    // for(let streamer of this.Streamers)
+    // {
+    // this.SetUserData(streamer);
+    // this.SetStreamData(streamer); 
+    // }  
   }
 
   OverwatchStreams =
@@ -46,10 +57,11 @@ export class StreamerDataService {
   };
 
   //Инфа о трансляции по оверу
-  async SetOWData() {
+  SetOWData( resolve ){
     console.log("Установка OWData");
-    const response = await fetch(this.OverwatchStreams, this.fetchData);
-    const data = await response.json();
+    fetch(this.OverwatchStreams, this.fetchData).then(response => response.json()).then(response =>
+      {
+        const data = response;
     console.log(data);
     for(let streamer of this.Streamers)
     {
@@ -64,6 +76,9 @@ export class StreamerDataService {
     streamer.streamURL = "https://www.twitch.tv/"+streamer.userName;
     }   
     console.log("Установка OWData прошла");
+        resolve();
+      }
+    );    
   }
   //Инфа о пользователе?ссылки на изображение
   async SetUserData(streamer: Streamer) {
