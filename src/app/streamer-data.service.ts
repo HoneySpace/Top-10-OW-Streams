@@ -17,9 +17,8 @@ export class StreamerDataService {
     {      
       this.Streamers.push(new Streamer(i));      
     }
-    this.InitObj(); 
-    let S = this.InitObj.bind(this);
-    setInterval(S,10000);   
+    this.InitObj();   
+    setInterval(this.UpdateInfo,60000,this);   
   }  
 
   public LogIt() {    
@@ -44,6 +43,21 @@ export class StreamerDataService {
     // this.SetUserData(streamer);
     // this.SetStreamData(streamer); 
     // }  
+  }
+
+  public async UpdateInfo(obj:StreamerDataService)
+  {
+    console.log('Updating...');
+    let p = new Promise((resolve)=>{
+        obj.SetOWData(resolve);
+    })
+    p.then(()=>{
+      for(let streamer of obj.Streamers)
+      {
+      obj.SetUserData(streamer);
+      obj.SetStreamData(streamer);
+      } 
+    });
   }
 
   OverwatchStreams =
