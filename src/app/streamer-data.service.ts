@@ -36,13 +36,7 @@ export class StreamerDataService {
       this.SetUserData(streamer);
       this.SetStreamData(streamer);
       } 
-    });
-    // await this.SetOWData();
-    // for(let streamer of this.Streamers)
-    // {
-    // this.SetUserData(streamer);
-    // this.SetStreamData(streamer); 
-    // }  
+    });    
   }
 
   public async UpdateInfo(obj:StreamerDataService)
